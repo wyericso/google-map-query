@@ -12,14 +12,19 @@ function initMap() {
   });
 }
 
+$.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyA4pEJNZ5sYarZVw8TeWpruX48VjPbPyO0&callback=initMap');
+
 function calculateAndDisplayRoute(routeLatLngArr) {
   var directionsService = new google.maps.DirectionsService;
   var directionsDisplay = new google.maps.DirectionsRenderer;
   directionsDisplay.setMap(map);
+
+  // Convert LatLng values to Google LatLng objects.
   var routeLatLngObjArr = routeLatLngArr.map(function(elem) {
     return new google.maps.LatLng({lat: parseFloat(elem[0]), lng: parseFloat(elem[1])});
   });
   
+  // Show route on map.
   directionsService.route({
     origin: routeLatLngObjArr.shift(),
     destination: routeLatLngObjArr.pop(),
@@ -40,10 +45,10 @@ function resetSubmitBtn() {
 }
 
 $(document).ready(function() {
-  // show max. dropoff addresses value.
+  // Show maximum number of dropoff addresses on the form.
   $('#maxdropoff').text(maxDropoff);
 
-  // adding more addresses.
+  // Add more addresses.
   $('#add').click(function() {
     if ($('input[name="dropoff"]').length < maxDropoff + 1) {
       $('.copy').before($('.copy').html());
@@ -54,19 +59,19 @@ $(document).ready(function() {
     }
   });
   
-  // removing address.
+  // Remove added address.
   $('body').on("click", "#remove", function() {
     $(this).parents('.input-group').remove();
   });
   
-  // submit form.
+  // Submit form.
   $('#addressform').submit(function(event) {
-    // if form is valid.
+    // If form is valid.
     if (document.getElementById('addressform').checkValidity()) {
-      // submit button -> loading.
+      // Submit button -> loading.
       $('#submit').addClass('active').text('').html('<i class="fa fa-spinner fa-spin"></i>');
 
-      // put all address inputs in addressArr.
+      // Put all address inputs in addressArr.
       var addressArr = $('#addressform').serializeArray().map(function(elem) {
         return elem.value;
       })
@@ -74,7 +79,7 @@ $(document).ready(function() {
         return elem2 !== ''
       });
 
-      // request Google to return lnglat value of all addresses in addressArr.
+      // Request Google to return lnglat value of all addresses in addressArr.
       var latLngArr = [];
       var jqXhrArr = addressArr.map(function(elem, index) {
         return $.get(googleGeoCodeApiUri,
@@ -85,13 +90,13 @@ $(document).ready(function() {
         });
       });
 
-      // after get all lnglat values from Google, send them to backend.
+      // After getting all lnglat values from Google, send them to backend.
       $.when(...jqXhrArr).done(function() {
         console.log(latLngArr);
-        // send to backend and get a token.
+        // Send to backend and get a token.
         $.post(backendUri, JSON.stringify(latLngArr), function(data2) {
           if (data2.token) {
-            // send token to backend and get returning latlng values.
+            // Send token to backend and get returning latlng values.
             $.get(backendUri + '/' + data2.token, function(data3) {
               if (data3.path) {
                 calculateAndDisplayRoute(data3.path);
@@ -121,7 +126,7 @@ $(document).ready(function() {
         });
       });
     }
-    // else, the form is invalid.
+    // Else, the form is invalid.
     else {
       $('#addressform').addClass('was-validated');
     }
