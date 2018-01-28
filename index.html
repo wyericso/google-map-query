@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Google Map Query</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+
+  <div class="container-fluid">
+  <div class="row">
+    <div class="col-4">
+      <form id="addressform" novalidate>
+        <div class="form-group">
+          <label>Starting address</label>
+          <input class="form-control" id="start" name="start" type="text" placeholder="e.g. Sheung Wan, HK" pattern=".*[A-Za-z0-9]+.*" required />
+          <div class="invalid-feedback">
+            Must contain alphanumeric character.
+          </div>
+        </div>
+        <div class="form-group" id="dropoff-form-group">
+          <label>Dropoff addresses (up to <span id="maxdropoff"></span>)</label>
+          <input class="form-control" name="dropoff" type="text" placeholder="e.g. Causeway Bay, HK" pattern=".*[A-Za-z0-9]+.*" required />
+          <div class="invalid-feedback">
+            Must contain alphanumeric character.
+          </div>
+          <div class="copy d-none">
+            <div class="input-group">
+              <input class="form-control" name="dropoff" type="text" placeholder="e.g. Chai Wan, HK" pattern="^$|.*[A-Za-z0-9]+.*" />
+              <div class="input-group-append">
+                <button type="button" class="btn btn-outline-secondary" id="remove">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-secondary" id="add">
+            <i class="fa fa-plus"></i> Add
+          </button>
+        </div>
+        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+      </form>
+    </div>
+    <div class="col-8">
+      <div id="map"></div>
+    </div>
+  </div>
+</div>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4pEJNZ5sYarZVw8TeWpruX48VjPbPyO0&callback=initMap">
+</script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+
+  
+
+    <script  src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>

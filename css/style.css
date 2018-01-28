@@ -1,0 +1,17 @@
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-image: url("http://cdn.backgroundhost.com/backgrounds/subtlepatterns/cream_dust.png");
+}
+
+.col-8 {
+  padding: 0;
+}
+
+html, body, .container-fluid, .row {
+  height: 100%;
+}
+
